@@ -1,4 +1,5 @@
 require 'rest_client'
+require 'mailjet/gem_extensions/rest_client'
 require 'active_support/core_ext/module/delegation'
 
 module Mailjet
@@ -52,7 +53,8 @@ module Mailjet
     end
 
     def handle_exeception(e, additional_headers, payload = {})
-      params = additional_headers[:params].merge(payload)
+      params = additional_headers[:params] || {}
+      params = params.merge(payload)
 
       raise Mailjet::ApiError.new(e.http_code, e.http_body, @adapter, @adapter.url, params)
     end

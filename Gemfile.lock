@@ -133,7 +133,6 @@ DEPENDENCIES
   minitest-matchers
   minitest-spec-context
   mocha
-  rack
   rake
   turn
   vcr

@@ -9,8 +9,8 @@ require "mailjet/version"
 Gem::Specification.new do |s|
   s.name        = "mailjet"
   s.version     = Mailjet::VERSION
-  s.authors     = ["Aurélien AMILIN", "Benoit Bénézech"]
-  s.email       = ["benoit.benezech@gmail.com"]
+  s.authors     = ["Jean-Baptiste Escoyez", "Aurélien AMILIN", "Benoit Bénézech"]
+  s.email       = ["jbescoyez@gmail.com"]
   s.homepage    = "http://www.mailjet.com"
   s.summary     = "Cloud Emailing for easy delivery."
   s.description = "Cloud Emailing for easy delivery."
@@ -28,10 +28,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency "turn"
   s.add_development_dependency "rake"
   s.add_development_dependency "json"
-  s.add_development_dependency "rack"
   s.add_development_dependency "mocha"
   s.add_development_dependency "webmock"
   s.add_development_dependency "vcr"
   s.add_development_dependency 'guard'
   s.add_development_dependency 'guard-minitest'
+  s.add_development_dependency 'debugger'
 end

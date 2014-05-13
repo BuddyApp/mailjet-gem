@@ -16,13 +16,15 @@
 [mailjet]: http://www.mailjet.com
 [rubinius]: http://rubini.us/
 [ree]: http://www.rubyenterpriseedition.com/
-[jruby]:http://jruby.org/
-[mailjetter]:https://github.com/holinnn/mailjetter/
-[activeresource]:https://github.com/rails/activeresource
-[apidoc]:http://mjdemo.poxx.net/~shubham/user.html?utm_source=github&utm_medium=link&utm_content=readme&utm_campaign=mailjet-gem
+[jruby]: http://jruby.org/
+[mailjetter]: https://github.com/holinnn/mailjetter/
+[activeresource]: https://github.com/rails/activeresource
+[apidoc]: http://dev.mailjet.com/guides
 [apidoc-recipient]: http://mjdemo.poxx.net/~shubham/listrecipient.html?utm_source=github&utm_medium=link&utm_content=readme&utm_campaign=mailjet-gem
 [camelcase-api]: http://api.rubyonrails.org/classes/String.html#method-i-camelcase
 [underscore-api]: http://api.rubyonrails.org/classes/String.html#method-i-underscore
+[actionmailerdoc]: http://guides.rubyonrails.org/action_mailer_basics.html#sending-emails-with-dynamic-delivery-options
+[send-api-doc]: http://dev.mailjet.com/guides/send-api-guide/
 
 <!-- You can read this readme file in other languages:
 english | [french](./README.fr.md) -->
@@ -91,9 +93,18 @@ As easy as:
 
 ```ruby
 # application.rb
-config.action_mailer.delivery_method = :mailjet
+config.action_mailer.delivery_method = :mailjet_smtp
 
 ```
+
+Or if you prefer sending messages through mailjet REST API:
+
+```ruby
+# application.rb
+config.action_mailer.delivery_method = :mailjet_api
+```
+
+You can use mailjet specific options with `delivery_method_options` as detailed in the official [ActionMailer doc][actionmailerdoc]
 
 ## Manage your campaigns
 
@@ -101,9 +112,9 @@ This gem provide a convenient wrapper for consuming the mailjet API. The wrapper
 
 You can find out all the resources you can access to in the [Official API docs][apidocs].
 
-Let's have a look at the power of this thin wrapper:
+Let's have a look at the power of this thin wrapper
 
-### Wrapper API
+### Wrapper REST API
 
 Let's say we want to manage list recipients.
 
@@ -183,6 +194,16 @@ class ListRecipient
   self.public_operations = [:get, :put, :post, :delete] # optional
 end
 ```
+
+## Send emails through API
+
+In order to send emails through the API, you just have to `create` a new `MessageDelivery` resource.
+
+```
+Mailjet::MessageDelivery.create(from: "me@example.com", to: "you@example.com", subject: "Mailjet is awesome", text: "Yes, it is!")
+```
+
+You can check available params in the [official doc][send-api-doc].
 
 ## Track email delivery
 
