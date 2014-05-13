@@ -1,9 +1,9 @@
 require 'mailjet/resource'
 
 module Mailjet
-  class Sender
+  class Contactdata
     include Mailjet::Resource
-    self.resource_path = 'v3/REST/sender'
+    self.resource_path = 'v3/REST/contactdata'
     self.public_operations = [:get, :put, :post, :delete]
 
   end

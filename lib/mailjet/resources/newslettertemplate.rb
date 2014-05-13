@@ -3,8 +3,8 @@ require 'mailjet/resource'
 module Mailjet
   class Newslettertemplate
     include Mailjet::Resource
-    self.resource_path = 'newslettertemplate'
-    self.public_operations = [:get, :post]
-    
+    self.resource_path = 'v3/REST/newslettertemplate'
+    self.public_operations = [:get, :put, :post]
+
   end
 end
