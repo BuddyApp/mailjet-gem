@@ -5,7 +5,7 @@ class Mailjet::Mailer < ::Mail::SMTP
   def initialize(options = {})
     ActionMailer::Base.default(:from => Mailjet.config.default_from) if Mailjet.config.default_from.present?
     super({
-      :address  => "in.mailjet.com",
+      :address  => "in-v3.mailjet.com",
       :port  => 587,
       :authentication  => 'plain',
       :user_name => Mailjet.config.api_key,
@@ -34,7 +34,7 @@ class Mailjet::APIMailer
         inlineattachment: mail.attachments.select{ |a| !a.inline? }.try(:decoded)
       }
     else
-      content = mail.text? ? {text: mail.body.decoded} : {html: mail.body.decoded}
+      content = (mail.mime_type == "text/html") ? {html: mail.body.decoded} : {text: mail.body.decoded}
     end
 
     payload = {
