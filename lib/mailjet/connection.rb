@@ -8,14 +8,18 @@ module Mailjet
     attr_accessor :adapter, :public_operations, :read_only
     alias :read_only? :read_only
 
-    delegate :[], :url, to: :adapter
+    delegate :options, :concat_urls, :url, to: :adapter
+
+    def [](suburl, &new_block)
+      self.class.new(concat_urls(url, suburl), options[:user], options[:password], options)
+    end
 
     def initialize(end_point, api_key, secret_key, options = {})
       adapter_class = options[:adapter_class] || RestClient::Resource
 
       self.public_operations = options[:public_operations] || []
       self.read_only = options[:read_only]
-      self.adapter = adapter_class.new(end_point, api_key, secret_key)
+      self.adapter = adapter_class.new(end_point, options.merge(user: api_key, password: secret_key))
     end
 
     def get(additional_headers = {}, &block)
@@ -49,6 +53,7 @@ module Mailjet
     end
 
     def method_allowed(method)
+      method = method.to_sym
       public_operations.include?(method) && (method == :get || !read_only?)
     end
 

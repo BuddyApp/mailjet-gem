@@ -123,7 +123,7 @@ module Mailjet
         response = connection.post(payload)
       end
 
-      self.attributes = parse_api_json(response)
+      self.attributes = parse_api_json(response).first
       return true
     rescue RestClient::NotModified
       return true # When you save a record twice it should not raise error
