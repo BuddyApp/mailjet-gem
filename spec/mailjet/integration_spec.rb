@@ -5,16 +5,18 @@ describe "Mailjet API Resource" do
   subject do
     class Mailjet::Contactlist
       include Mailjet::Resource
-      self.resource_path = "contactslist"
+      self.resource_path = "/v3/REST/contactslist"
       self.public_operations = [:get, :post, :put, :delete]
     end
     Mailjet::Contactlist
   end
 
+  let(:subject_id) { 4 }
+
   it "retrieves all contact lists" do
     VCR.use_cassette('fetch lists') do
       lists = subject.all(limit: 0)
-      lists.size.must_equal 134
+      lists.size.must_equal 9
     end
   end
 
@@ -27,25 +29,25 @@ describe "Mailjet API Resource" do
 
   it "it retrieves lists by id" do
     VCR.use_cassette('fetch list') do
-      list = subject.find("409808")
+      list = subject.find(subject_id)
       list.name.must_equal "Test List"
     end
   end
 
   it "updates list fields" do
     VCR.use_cassette('update list') do
-      list = subject.find("409808")
+      list = subject.find(subject_id)
       list.update_attributes(name: "Test List Updated")
-      list = subject.find("409808")
+      list = subject.find(subject_id)
       list.name.must_equal "Test List Updated"
     end
   end
 
   it "deletes list fields" do
     VCR.use_cassette('destroy list') do
-      list = subject.find("409808")
+      list = subject.find(subject_id)
       list.delete
-      list = subject.find("409808")
+      list = subject.find(subject_id)
       list.is_deleted?.must_equal true
     end
   end

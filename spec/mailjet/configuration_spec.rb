@@ -7,10 +7,4 @@ describe Mailjet::Configuration do
       Mailjet::Configuration.api_key.must_equal '1234'
     end
   end
-
-  describe "#use_https" do
-    it "should be true by default" do
-      Mailjet::Configuration.use_https.must_equal true
-    end
-  end
 end
